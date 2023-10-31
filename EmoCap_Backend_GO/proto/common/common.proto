@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "build/common/kotlin_common";
+
+package kotlin_common;
+
+service CommonProtoService {
+  rpc validateToken (JWTRequest) returns (JWTResponse) {};
+}
+
+message JWTRequest {
+  string token = 1;
+}
+
+message JWTResponse {
+  bool success = 1;
+}

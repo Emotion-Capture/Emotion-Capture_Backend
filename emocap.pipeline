@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('init') {
+            steps {
+                script {
+                    def containers = sh(script: 'docker ps -aq', returnStatus: true)
+                    def images = sh(script: 'docker images -q', returnStatus: true)
+                    if (containers) {
+                        sh(script: "docker rm -f ${containers}")
+                    }
+                    if (images) {
+                        sh(script: "docker rmi ${images}")
+                    }
+                }
+            }
+        }
+        
+        stage('github clone') {
+            steps {
+                git branch: 'main', 
+                credentialsId: 'Github-park56-Token', 
+                url: 'https://github.com/Emotion-Capture/EmoCap_Backend.git'
+            }
+        }
+        
+        stage('docker run') {
+            steps {
+                dir('/var/lib/jenkins/workspace/emocap-pipeline') {
+                    sh 'docker compose up -d'
+                }
+            }
+        }
+    }
+}

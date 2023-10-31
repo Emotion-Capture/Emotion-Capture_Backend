@@ -1,0 +1,11 @@
+FROM golang:latest
+
+WORKDIR /go/src/emocap
+
+COPY . .
+
+EXPOSE 5050
+
+WORKDIR /go/src/emocap/cmd
+
+CMD ["go", "run", "main.go"]

@@ -1,0 +1,9 @@
+FROM openjdk:17-jdk-slim
+
+ARG JAR_FILE=./emocap/build/libs/*.jar
+
+COPY ${JAR_FILE} emocap.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "emocap.jar"]

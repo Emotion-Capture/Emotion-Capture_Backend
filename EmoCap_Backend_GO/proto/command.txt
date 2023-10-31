@@ -1,0 +1,23 @@
+  protoc ./proto/*.proto 
+    --go_out=. 
+    --go_opt=paths=source_relative 
+    --go-grpc_out=. 
+    --go-grpc_opt=paths=source_relative 
+    --proto_path=.
+
+"./proto/*.proto": 컴파일할 입력 파일 지정
+
+"--go_out=.": 생성된 go 코드의 출력 디렉터리 지정
+
+"--go_opt=paths=source_relative": 생성된 go코드가 상대경로로 소스를 가져와야 함을 지정한다.
+
+"--go-grpc_out=.": gRPC 서비스용 서버 및 클라이언트 코드를 포함한 생성된 Go grpc 코드의 출력 디렉토리를 지정한다.
+
+"--go-grpc_opt=paths=source_relative": 생성된 go코드가 상대경로로 소스를 가져와야 함을 지정한다.
+
+"--proto_path=.": 컴파일러가 가져온 파일을 검색해야하는 디랙토리를 지정한다. proto파일을 검색할 위치라고 생각.
+
+
+
+
+protoc ./proto/*/*.proto --go_out=./build --go_opt=paths=source_relative --go-grpc_out=./build --go-grpc_opt=paths=source_relative --proto_path=./proto

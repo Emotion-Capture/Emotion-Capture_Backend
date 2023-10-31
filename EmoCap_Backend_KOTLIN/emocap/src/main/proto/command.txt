@@ -1,0 +1,2 @@
+./gradlew generateProto -> proto 파일 생성
+./gradlew generateProto clean -> proto 파일 정리

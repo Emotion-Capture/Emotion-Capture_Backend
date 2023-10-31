@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.emocap.commonproto";
+option java_outer_classname = "CommonProto";
+
+package common;
+
+service CommonProtoService {
+  rpc validateToken (JWTRequest) returns (JWTResponse) {};
+}
+
+message JWTRequest {
+  string token = 1;
+}
+
+message JWTResponse {
+  bool success = 1;
+}

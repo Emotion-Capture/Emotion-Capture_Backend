@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  mysql:
+    build: ./database/mysql
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="${MYSQL_PASSWORD}" --silent']
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    restart: always
+    networks:
+      - server
+    ports:
+      - 3308:3306
+
+  go-server:
+    container_name: go_server
+    build: ./EmoCap_Backend_GO
+    environment:
+      MONGOURI: ${MONGOURI}
+      MONGODBNAME: ${MONGODBNAME}
+      KOTLINADDRES: ${KOTLINADDRES}
+    restart: always
+    networks:
+      - server
+    ports:
+      - 5050:5050
+
+  kotlin-server:
+    depends_on:
+      mysql:
+        condition: service_healthy
+    container_name: kotlin_server
+    build: ./EmoCap_Backend_KOTLIN
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: always
+    networks:
+      - server
+    ports:
+      - 8080:8080
+
+networks:
+  server:
+    driver: bridge
