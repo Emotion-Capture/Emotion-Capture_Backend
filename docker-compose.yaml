@@ -27,7 +27,7 @@ services:
     networks:
       - server
     ports:
-      - 8080:5050
+      - 5000:5050
 
   kotlin-server:
     depends_on:
@@ -45,7 +45,7 @@ services:
     networks:
       - server
     ports:
-      - 8080:8080
+      - 8000:8080
 
 networks:
   server:
